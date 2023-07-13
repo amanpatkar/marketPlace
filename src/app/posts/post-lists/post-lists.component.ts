@@ -14,9 +14,10 @@ export class PostListsComponent implements OnInit {
   constructor(public postService:PostsService){}
   private postSub: Subscription = new Subscription;
   ngOnInit(){
-   this.posts = this.postService.getPost();
+   this.postService.getPost();
    this.postService.getPostUpdateListner().subscribe((posts:post[])=>{
     this.posts = posts;
+    console.log(this.posts)
    });
   }
   ngOnDestroy(){
