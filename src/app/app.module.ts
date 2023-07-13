@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLinkActive } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatModule } from './mat/mat.module';
+import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { PostListsComponent } from './posts/post-lists/post-lists.component';
 
@@ -25,6 +26,7 @@ import { PostListsComponent } from './posts/post-lists/post-lists.component';
     ReactiveFormsModule,
     MatModule,
     RouterLinkActive,
+    HttpClientModule,
     BrowserAnimationsModule
 
   ],
