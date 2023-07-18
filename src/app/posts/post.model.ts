@@ -1,4 +1,5 @@
 export interface post  {
+    [x: string]: any
     id:string | null
     title:string,
     content:string
