@@ -8,6 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 const material = [
   MatSlideToggleModule,
   MatInputModule,
@@ -16,7 +17,8 @@ const material = [
   MatButtonModule,
   MatCardModule,
   MatToolbarModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatProgressSpinnerModule
 
   
 ]

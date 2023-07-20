@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { post } from '../post.model';
 import { PostsService } from '../posts.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-lists',
@@ -10,14 +11,17 @@ import { Subscription } from 'rxjs';
 })
 export class PostListsComponent implements OnInit {
   // @Input() posts:post[] = [];
-  posts:post[] = []
-  constructor(public postService:PostsService){}
+  posts:post[] = [];
+  isLoading = true;
+  constructor(public postService:PostsService, public router:Router){}
   private postSub: Subscription = new Subscription;
   ngOnInit(){
    this.postService.getPost();
    this.postService.getPostUpdateListner().subscribe((posts:post[])=>{
     this.posts = posts;
-    console.log(this.posts)
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
    });
   }
   ngOnDestroy(){
@@ -34,7 +38,8 @@ export class PostListsComponent implements OnInit {
       title: '',
       content: ''
     }
-    this.postService.editPosts(id,post);
-
+    this.router.navigate([`/edit/${id}`]);
+    // this.postService.editPosts(id,post);
+    
   }
 }

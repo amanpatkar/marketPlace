@@ -2,3 +2,9 @@
 textarea{
     width: 100%;
 }
+.parent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24rem;
+}

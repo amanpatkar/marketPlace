@@ -5,3 +5,9 @@
 .info-text{
     text-align: center;
 }
+.parent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24rem;
+}

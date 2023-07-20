@@ -1,14 +1,21 @@
-<mat-accordion multi="true" *ngIf="posts.length > 0">
-    <mat-expansion-panel *ngFor="let item of posts">
-        <mat-expansion-panel-header>
-            {{item.title}}
-        </mat-expansion-panel-header>
-        <p> {{item.content}}</p>
-        <mat-action-row>
-         <button mat-raised-button color="primary" (click)="onEdit(item.id)">Edit</button>
-         <button mat-raised-button color="warn" (click)="onDelete(item.id)">Delete</button>
-        </mat-action-row>
-    </mat-expansion-panel>
-</mat-accordion>
+<div class="parent" *ngIf="isLoading">
+    <mat-spinner ></mat-spinner>
+    
+</div>
+<div  *ngIf="!isLoading">
+
+    <mat-accordion multi="true" *ngIf="posts.length > 0">
+        <mat-expansion-panel *ngFor="let item of posts">
+            <mat-expansion-panel-header>
+                {{item.title}}
+            </mat-expansion-panel-header>
+            <p> {{item.content}}</p>
+            <mat-action-row>
+             <button mat-raised-button color="primary" (click)="onEdit(item.id)">Edit</button>
+             <button mat-raised-button color="warn" (click)="onDelete(item.id)">Delete</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
 
 <p *ngIf="posts?.length === 0" class="info-text">No Post Available yet!</p>
