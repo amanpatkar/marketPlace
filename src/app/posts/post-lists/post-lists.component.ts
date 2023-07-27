@@ -36,7 +36,8 @@ export class PostListsComponent implements OnInit {
     let post:post = {
       id: null,
       title: '',
-      content: ''
+      content: '',
+      imagePath: ''
     }
     this.router.navigate([`/edit/${id}`]);
     // this.postService.editPosts(id,post);

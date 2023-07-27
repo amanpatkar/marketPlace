@@ -1,10 +1,13 @@
 const express = require('express');
 
+
+const path = require("path")
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const Post = require('./models/post')
 const app = express();
 const cors = require('cors');
+app.use("/images",express.static(path.join("backend/images")));
 const postRoute = require("./routes/post");
 app.use(cors());
 
