@@ -11,3 +11,10 @@
     justify-content: center;
     height: 24rem;
 }
+.post-image{
+    width:100%;
+}
+.post-image img {
+    height: 8rem;
+   box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
