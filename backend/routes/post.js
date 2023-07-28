@@ -65,14 +65,28 @@ router.post("", multer({storage:storage}).single("image"),(req,res,next) =>{
 })
 // Get All Posts
 router.get('',(req, res, next) => {
-    Post.find().then(document =>{
-        res.status(200).json({
-            message:'Post fetch  successfully!',
-            data: document,
-            status:200
-        })
-    })
-   
+  let fetchedPost;
+  const pageSize = req.query.pageSize;
+  const currentPage = req.query.page;
+  const postQuery = Post.find();
+  
+  if(pageSize && currentPage){
+    postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  }
+  postQuery.then(document =>{
+    fetchedPost = document;
+    return Post.count();
+  })
+  .then(count =>{
+    res.status(200).json({
+      message:'Post fetch  successfully!',
+      data: fetchedPost,
+      maxPost:count,
+      status:200
+  })
+  })
+ 
+  
 })
 // Get a specific todo
 router.get('/:id', (req, res) => {
