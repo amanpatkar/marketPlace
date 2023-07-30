@@ -11,6 +11,7 @@ import { MatModule } from './mat/mat.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { PostListsComponent } from './posts/post-lists/post-lists.component';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { PostListsComponent } from './posts/post-lists/post-lists.component';
     BrowserAnimationsModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy } // Use the PathLocationStrategy
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
