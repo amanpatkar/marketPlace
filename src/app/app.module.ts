@@ -32,7 +32,6 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
   ],
   providers: [
-    { provide: LocationStrategy, useClass: PathLocationStrategy } // Use the PathLocationStrategy
   ],
   bootstrap: [AppComponent]
 })
