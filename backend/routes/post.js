@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require('../models/post')
-
+const checkAuth = require("../middleware/check.auth")
 const multer = require("multer")
 
 
@@ -44,12 +44,14 @@ router.get('/:id', (req, res, next) => {
   
 });
 
-router.post("", multer({storage:storage}).single("image"),(req,res,next) =>{
+router.post("",checkAuth,
+ multer({storage:storage}).single("image"),(req,res,next) =>{
   const url = req.protocol + '://' + req.get("host");
     const post = new Post({
         title:req.body.title,
         content:req.body.content,
-        imagePath: url + "/images/" +req.file.filename
+        imagePath: url + "/images/" +req.file.filename,
+        creator: req.userData.userId
     });
     post.save().then(result =>{
       res.status(201).json({
@@ -105,7 +107,8 @@ router.get('/:id', (req, res) => {
       });
   });
   // Update a todo
-router.put('/:id',multer({storage:storage}).single("image"), (req, res) => {
+router.put('/:id',checkAuth,
+multer({storage:storage}).single("image"), (req, res) => {
     const { id } = req.params;
     let { title, content, imagePath } = req.body;
     if(req.file){
@@ -113,10 +116,14 @@ router.put('/:id',multer({storage:storage}).single("image"), (req, res) => {
       imagePath = url + "/images/" +req.file.filename
     }
 
-    Post.findByIdAndUpdate(id, { title, content, imagePath })
+    Post.updateOne({_id:req.params.id,creator:req.userData.userId}, { title, content, imagePath })
       .then((todo) => {
         if (todo) {
-          res.json({ message: 'Post updated successfully' });
+          if(todo.modifiedCount === 0){
+            res.status(410).json("Invild User!!!")
+          }else{
+            res.json({ message: 'Post updated successfully' });
+          }
         } else {
           res.status(404).json({ error: 'Post not found' });
         }
@@ -126,13 +133,18 @@ router.put('/:id',multer({storage:storage}).single("image"), (req, res) => {
       });
   });
 // Delete a todo
-router.delete('/:id', (req, res) => {
+router.delete('/:id',checkAuth,
+ (req, res) => {
     const { id } = req.params;
-    console.log(id)
-    Post.findByIdAndRemove(id)
+    Post.deleteOne({_id:req.params.id,creator:req.userData.userId})
       .then((todo) => {
         if (todo) {
-          res.json({ message: 'Post deleted successfully' });
+          console.log(todo)
+          if(todo.deletedCount === 0){
+            res.status(410).json("Invild User!!!")
+          }else{
+            res.json({ message: 'Post deleted successfully' });
+          }
         } else {
           res.status(404).json({ error: 'Post not found' });
         }

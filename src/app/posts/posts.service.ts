@@ -20,7 +20,8 @@ export class PostsService {
           title:post.title,
           content:post.content,
           imagePath:post.imagePath,
-          id:post._id
+          id:post._id,
+          creator:post.creator
         }
       }), maxPosts:postData.maxPost
     }
@@ -88,7 +89,7 @@ export class PostsService {
         
         },
         error => {
-          console.log('Error deleting todo:', error);
+          throw new Error("Error in Updating the Post", error)
         }
       );
     }

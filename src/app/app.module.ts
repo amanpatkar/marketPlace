@@ -8,10 +8,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLinkActive } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatModule } from './mat/mat.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { PostListsComponent } from './posts/post-lists/post-lists.component';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,8 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     PostCreateComponent,
     HeaderComponent,
     PostListsComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
   ],
   providers: [
+   {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
 })
