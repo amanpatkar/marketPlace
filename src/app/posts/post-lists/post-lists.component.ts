@@ -19,12 +19,13 @@ export class PostListsComponent implements OnInit {
   isUserAuthenticated = false;
   totalPost = 10;
   postsPerPage = 1;
+  userId:string = '';
   pageSizeOption = [1,5, 10,15,20];
   currentPage = 1
   constructor(public postService:PostsService, public router:Router, private auth:AuthService){}
   private postSub: Subscription = new Subscription;
   ngOnInit(){
-
+   this.userId = String(this.auth.getUserId());
    this.postService.getPost(this.postsPerPage,this.currentPage);
    this.postService.getPostUpdateListner().subscribe((postData:{posts:post[], postCount:number})=>{
     this.posts = postData.posts;
@@ -36,6 +37,7 @@ export class PostListsComponent implements OnInit {
    this.isUserAuthenticated =  this.auth.getAuthStatus();
    this.authSubscription = this.auth.getAuthStatusListner().subscribe(isAuthenticated =>{
     this.isUserAuthenticated = isAuthenticated;
+    this.userId = String(this.auth.getUserId());
    })
 
   }
@@ -61,7 +63,8 @@ export class PostListsComponent implements OnInit {
       id: null,
       title: '',
       content: '',
-      imagePath: ''
+      imagePath: '',
+      creator:''
     }
     this.router.navigate([`/edit/${id}`]);
     // this.postService.editPosts(id,post);

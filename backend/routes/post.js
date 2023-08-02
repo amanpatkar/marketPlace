@@ -110,13 +110,13 @@ router.get('/:id', (req, res) => {
 router.put('/:id',checkAuth,
 multer({storage:storage}).single("image"), (req, res) => {
     const { id } = req.params;
-    let { title, content, imagePath } = req.body;
+    let { title, content, imagePath , creator} = req.body;
     if(req.file){
       const url = req.protocol + '://' + req.get("host");
       imagePath = url + "/images/" +req.file.filename
     }
 
-    Post.updateOne({_id:req.params.id,creator:req.userData.userId}, { title, content, imagePath })
+    Post.updateOne({_id:req.params.id,creator:req.userData.userId}, { title, content, imagePath ,creator})
       .then((todo) => {
         if (todo) {
           if(todo.modifiedCount === 0){

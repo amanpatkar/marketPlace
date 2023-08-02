@@ -15,7 +15,7 @@
             <hr>
             <p> {{item.content}}</p>
            
-            <mat-action-row *ngIf="isUserAuthenticated">
+            <mat-action-row *ngIf="isUserAuthenticated && userId === item.creator">
              <button mat-raised-button color="primary" (click)="onEdit(item.id)">Edit</button>
              <button mat-raised-button color="warn" (click)="onDelete(item.id)">Delete</button>
             </mat-action-row>
