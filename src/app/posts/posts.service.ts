@@ -20,7 +20,8 @@ export class PostsService {
           title:post.title,
           content:post.content,
           imagePath:post.imagePath,
-          id:post._id
+          id:post._id,
+          creator:post.creator
         }
       }), maxPosts:postData.maxPost
     }
@@ -32,7 +33,7 @@ export class PostsService {
    
   }
   getPostData(id:string){
-  return this.http.get<{_id:string,title:string,content:string,imagePath:string}>('http://localhost:3000/api/posts/'+id);
+  return this.http.get<{_id:string,title:string,content:string,imagePath:string,creator:string}>('http://localhost:3000/api/posts/'+id);
   }
   addPost(title:string, content:string, image:File){
     const postData = new FormData();
@@ -88,7 +89,7 @@ export class PostsService {
         
         },
         error => {
-          console.log('Error deleting todo:', error);
+          throw new Error("Error in Updating the Post", error)
         }
       );
     }
