@@ -1,0 +1,8 @@
+.head{
+    text-align: center;
+}
+.dialgueDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

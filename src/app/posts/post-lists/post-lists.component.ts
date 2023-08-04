@@ -46,9 +46,11 @@ export class PostListsComponent implements OnInit {
     this.authSubscription.unsubscribe();
   }
   onDelete(id:any){
-  
+  this.isLoading = true;
   this.postService.deletePosts(id).subscribe(() =>{
     this.postService.getPost(this.postsPerPage, this.currentPage);
+  },()=>{
+    this.isLoading = false;
   })
  
   }

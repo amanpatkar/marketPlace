@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { user } from './auth.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import {environement} from '../../environments/environment'
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,15 +33,18 @@ export class AuthService {
     email:email,
     password:password
   }
-   this.http.post<user>("http://localhost:3000/api/user/signup",authData).subscribe(response =>{
-    console.log(response)
+ this.http.post<user>(environement.apiUrl+"/user/signup",authData).subscribe(response =>{
+    this.authStatusListner.next(true);
+    this.router.navigate(['/'])
+   },error =>{
+    this.authStatusListner.next(false);
    })
   }
 
 
   logInUser(email:string, password:string){
     const authData:user = {email:email,password:password}
-    this.http.post<{token:string,expiresIn:number,userId:string}>('http://localhost:3000/api/user/login',authData).subscribe(response =>{
+    this.http.post<{token:string,expiresIn:number,userId:string}>(environement.apiUrl+'/user/login',authData).subscribe(response =>{
       console.log(response)
       const token = response.token;
       this.token = token;
@@ -54,6 +59,8 @@ export class AuthService {
         this.saveAuthData(token,expirationDate,this.userId)
         this.router.navigate(['/']);
       }
+     },error =>{
+      this.authStatusListner.next(false);
      })
   }
  getUserId(){
