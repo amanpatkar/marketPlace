@@ -15,6 +15,9 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { ErrroInterceptor } from './error.interceptor';
+import { ErrorComponent } from './error/error/error.component';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     PostListsComponent,
     LoginComponent,
     SignupComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,8 +41,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 
   ],
   providers: [
-   {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor, multi:true}
+   {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor, multi:true},
+   {provide:HTTP_INTERCEPTORS,useClass:ErrroInterceptor, multi:true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

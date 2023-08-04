@@ -4,6 +4,8 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { PostsService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {mimeType} from './mime-type.validator'
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
@@ -13,13 +15,14 @@ export class PostCreateComponent implements OnInit {
   form!: FormGroup;
   enteredValue = '';
   enteredTitle = '';
+  private authStatusSub = new Subscription();
   isLoading = true;
   imagePreview:string = '';
  private postId:string = '';
  private mode = 'create';
   post:any;
   // @Output() postCreated = new EventEmitter<post>();
-  constructor(public postService:PostsService, public route:ActivatedRoute){}
+  constructor(public postService:PostsService, public route:ActivatedRoute,private auth:AuthService){}
   newPost = '';
   title = '';
   content = '';
@@ -49,6 +52,13 @@ export class PostCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.authStatusSub = this.auth.getAuthStatusListner().subscribe(authStatus =>{
+      if(!authStatus){
+        this.isLoading = false;
+      }else{
+        this.isLoading = true;
+      }
+   })
     this.form = new FormGroup({
       title:new FormControl(null, {validators: [Validators.required,Validators.minLength(3)]}),
       content: new FormControl(null , {validators: [Validators.required]}),
