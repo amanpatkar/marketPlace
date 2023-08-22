@@ -39,7 +39,6 @@ export class PostListsComponent implements OnInit {
     this.isUserAuthenticated = isAuthenticated;
     this.userId = String(this.auth.getUserId());
    })
-
   }
   ngOnDestroy(){
     this.postSub.unsubscribe();

@@ -14,3 +14,15 @@ ul{
 display: flex;
 column-gap: 24px;
 }
+.userColor{
+color: chartreuse;
+font-weight: 500;
+font-size: 17px;
+line-height: 24px;
+}
+.login-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 4px;
+}

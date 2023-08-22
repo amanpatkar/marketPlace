@@ -1,0 +1,32 @@
+
+
+<h1>List of forms</h1>
+<div class="parent-form parent-form_1">
+  <form [formGroup]="dynamicForm" (ngSubmit)="getFormData()" class="">
+      <div formArrayName="entries">
+        <div *ngFor="let entry of entryControls; let i = index">
+          <div [formGroupName]="i">
+            <mat-form-field>
+              <input matInput formControlName="tspOtherName" placeholder="Field 1">
+              <mat-error *ngIf="entry.get('tspOtherName')?.invalid && entry.get('tspOtherName')?.touched">
+                Enter a valid value
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="othersTsp" placeholder="Field 2">
+              <mat-error *ngIf="entry.get('othersTsp')?.invalid && entry.get('othersTsp')?.touched">
+                Enter a valid value
+              </mat-error>
+            </mat-form-field>
+            <button *ngIf="i > 0" type="button" mat-raised-button (click)="removeEntry(i)" color="warn">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="button-group">
+        <button type="button" (click)="addEntry()" mat-raised-button color="accent" >Add More</button>
+        <button type="submit"  mat-raised-button color="primary" >Submit</button>
+      </div>
+    </form>
+
+</div>
+  

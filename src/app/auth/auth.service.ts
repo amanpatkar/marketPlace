@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { user } from './auth.model';
-import { Subject } from 'rxjs';
+import { createUser, user } from './auth.model';
+import { Subject, map } from 'rxjs';
 import { Router } from '@angular/router';
 import {environement} from '../../environments/environment'
 
-
+const BACK_END_URL =environement.apiUrl + '/user/users'
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   
   isAuthenticated = false;
@@ -16,6 +17,7 @@ export class AuthService {
   private tokenTimer:any;
   private userId:string | null = '';
   private authStatusListner = new Subject<boolean>();
+  loginUser = new Subject<any>();
   constructor(private http:HttpClient,private router:Router) { }
 
   getToken(){
@@ -28,8 +30,9 @@ export class AuthService {
   getAuthStatusListner(){
     return this.authStatusListner.asObservable();
   }
-  createUser(email:string, password:string){
-  const authData:user = {
+  createUser(full_name:string,email:string, password:string){
+  const authData:createUser = {
+    full_name:full_name,
     email:email,
     password:password
   }
@@ -120,4 +123,18 @@ export class AuthService {
     }
     return {token:token,expirationTime: new Date(expirationTime), userId:userId}
   }
+
+  users = []
+  getUser(){
+    this.http.get<{message:string, data:user, status:number,maxPost:number}>(BACK_END_URL)
+    .subscribe((transformPost:any)=>{
+     this.users = transformPost.posts;
+     console.log(this.users)
+    })
+   
+  }
+
+  getPostData(id:string){
+    return this.http.get<{_id:string,email:string,full_name:string}>(BACK_END_URL+'/'+id);
+    }
 }
