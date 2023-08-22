@@ -8,6 +8,7 @@ exports.createUser = (req,res,next) =>{
     bcrypt.hash(req.body.password, 10).then(hash =>{
 
         const user = new User({
+            full_name:req.body.full_name,
             email:req.body.email,
             password:hash
         }) 
@@ -64,3 +65,43 @@ exports.userLogin = (req,res,next) =>{
         })
     })
 }
+exports.getUserLists = (req, res, next) => {
+    User.find({}, "-password")
+        .then(users => {
+            res.status(200).json({
+                message: 'Users fetched successfully!',
+                data: users,
+                status: 200
+            });
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: {
+                    message: 'Fetching users failed!'
+                }
+            });
+        });
+};
+
+exports.getUserById = (req, res, next) => {
+    const userId = req.params.id;
+
+    User.findById(userId, "-password")
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    error: {
+                        message: 'User not found!'
+                    }
+                });
+            }
+            res.status(200).json(user);
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: {
+                    message: 'Fetching user failed!'
+                }
+            });
+        });
+};

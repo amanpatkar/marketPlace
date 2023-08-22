@@ -5,6 +5,12 @@
 <form (ngSubmit)="onSignUp(signUpForm)" #signUpForm="ngForm" *ngIf="!isLoading">
     <mat-card>
         <mat-form-field>
+            <mat-label>Full Name</mat-label>
+            <input matInput type="text"  placeholder="Full Name" name="full_name" ngModel #full_name="ngModel" required>
+            <mat-error *ngIf="full_name.invalid">Please Enter valid Name.</mat-error>
+
+        </mat-form-field>
+        <mat-form-field>
             <mat-label>Email</mat-label>
             <input matInput type="email"  placeholder="Email Address" name="email" ngModel #emailInput="ngModel" required>
             <mat-error *ngIf="emailInput.invalid">Please Enter valid email.</mat-error>

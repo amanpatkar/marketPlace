@@ -10,6 +10,7 @@ import { AuthService } from './auth/auth.service';
 
 export class AppComponent implements OnInit{
   title = 'marketPlace';
+  userId:any
   // storedPosts:post[] = [];
   // postAdded(post: any){
   // this.storedPosts.push(post)
@@ -19,5 +20,9 @@ export class AppComponent implements OnInit{
    }
   ngOnInit(): void {
     this.auth.autoAuthenticate();
+    this.userId = String(this.auth.getUserId());
+    this.auth.getPostData(this.userId).subscribe((res:any)=>{
+      this.auth.loginUser.next(res.full_name);
+    })
   }
 }

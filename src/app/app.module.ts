@@ -17,6 +17,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ErrroInterceptor } from './error.interceptor';
 import { ErrorComponent } from './error/error/error.component';
+import { MultiFormComponent } from './auth/multi-form/multi-form.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { ErrorComponent } from './error/error/error.component';
     LoginComponent,
     SignupComponent,
     ErrorComponent,
+    MultiFormComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

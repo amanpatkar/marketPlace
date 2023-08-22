@@ -9,6 +9,9 @@
     <li *ngIf="isUserAuthenticated">
         <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Post</a>
     </li>
+    <li *ngIf="isUserAuthenticated">
+        <a mat-button routerLink="/form" routerLinkActive="mat-accent">Create Form </a>
+    </li>
      <li *ngIf="!isUserAuthenticated">
         <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
     </li>
@@ -19,6 +22,13 @@
         <button mat-button (click)="onLogOut()">
             Logout
         </button>
+    </li>
+    <li *ngIf="isUserAuthenticated" class="login-list">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle"></mat-icon>
+       Welcome
+        <span class="userColor">
+           {{loggedInUser}}!!
+       </span> 
     </li>
    </ul>
 </mat-toolbar>

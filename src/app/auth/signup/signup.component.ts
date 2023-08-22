@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit , OnDestroy{
       return;
     }
    console.log(form.value)
-   this.auth.createUser(form.value.email, form.value.password);
+   this.auth.createUser(form.value.full_name,form.value.email,form.value.password);
 
  }
  ngOnDestroy(): void {
