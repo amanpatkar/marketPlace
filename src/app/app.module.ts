@@ -19,6 +19,9 @@ import { ErrroInterceptor } from './error.interceptor';
 import { ErrorComponent } from './error/error/error.component';
 import { MultiFormComponent } from './auth/multi-form/multi-form.component';
 import { FooterComponent } from './footer/footer.component';
+import {AngularFireModule} from '@angular/fire/compat'
+import { environement } from 'src/environments/environment';
+environement
 
 
 @NgModule({
@@ -41,8 +44,8 @@ import { FooterComponent } from './footer/footer.component';
     MatModule,
     RouterLinkActive,
     HttpClientModule,
-    BrowserAnimationsModule
-
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environement.firebaseConfig),
   ],
   providers: [
    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor, multi:true},
